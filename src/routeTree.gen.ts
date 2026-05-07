@@ -9,38 +9,158 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ModeloRouteImport } from './routes/modelo'
+import { Route as LegalRouteImport } from './routes/legal'
+import { Route as FlujoRouteImport } from './routes/flujo'
+import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LegalTerminosRouteImport } from './routes/legal.terminos'
+import { Route as LegalPagareRouteImport } from './routes/legal.pagare'
+import { Route as LegalMandatoRouteImport } from './routes/legal.mandato'
 
+const ModeloRoute = ModeloRouteImport.update({
+  id: '/modelo',
+  path: '/modelo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalRoute = LegalRouteImport.update({
+  id: '/legal',
+  path: '/legal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FlujoRoute = FlujoRouteImport.update({
+  id: '/flujo',
+  path: '/flujo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactoRoute = ContactoRouteImport.update({
+  id: '/contacto',
+  path: '/contacto',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LegalTerminosRoute = LegalTerminosRouteImport.update({
+  id: '/terminos',
+  path: '/terminos',
+  getParentRoute: () => LegalRoute,
+} as any)
+const LegalPagareRoute = LegalPagareRouteImport.update({
+  id: '/pagare',
+  path: '/pagare',
+  getParentRoute: () => LegalRoute,
+} as any)
+const LegalMandatoRoute = LegalMandatoRouteImport.update({
+  id: '/mandato',
+  path: '/mandato',
+  getParentRoute: () => LegalRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contacto': typeof ContactoRoute
+  '/flujo': typeof FlujoRoute
+  '/legal': typeof LegalRouteWithChildren
+  '/modelo': typeof ModeloRoute
+  '/legal/mandato': typeof LegalMandatoRoute
+  '/legal/pagare': typeof LegalPagareRoute
+  '/legal/terminos': typeof LegalTerminosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contacto': typeof ContactoRoute
+  '/flujo': typeof FlujoRoute
+  '/legal': typeof LegalRouteWithChildren
+  '/modelo': typeof ModeloRoute
+  '/legal/mandato': typeof LegalMandatoRoute
+  '/legal/pagare': typeof LegalPagareRoute
+  '/legal/terminos': typeof LegalTerminosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contacto': typeof ContactoRoute
+  '/flujo': typeof FlujoRoute
+  '/legal': typeof LegalRouteWithChildren
+  '/modelo': typeof ModeloRoute
+  '/legal/mandato': typeof LegalMandatoRoute
+  '/legal/pagare': typeof LegalPagareRoute
+  '/legal/terminos': typeof LegalTerminosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/contacto'
+    | '/flujo'
+    | '/legal'
+    | '/modelo'
+    | '/legal/mandato'
+    | '/legal/pagare'
+    | '/legal/terminos'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/contacto'
+    | '/flujo'
+    | '/legal'
+    | '/modelo'
+    | '/legal/mandato'
+    | '/legal/pagare'
+    | '/legal/terminos'
+  id:
+    | '__root__'
+    | '/'
+    | '/contacto'
+    | '/flujo'
+    | '/legal'
+    | '/modelo'
+    | '/legal/mandato'
+    | '/legal/pagare'
+    | '/legal/terminos'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactoRoute: typeof ContactoRoute
+  FlujoRoute: typeof FlujoRoute
+  LegalRoute: typeof LegalRouteWithChildren
+  ModeloRoute: typeof ModeloRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/modelo': {
+      id: '/modelo'
+      path: '/modelo'
+      fullPath: '/modelo'
+      preLoaderRoute: typeof ModeloRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal': {
+      id: '/legal'
+      path: '/legal'
+      fullPath: '/legal'
+      preLoaderRoute: typeof LegalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/flujo': {
+      id: '/flujo'
+      path: '/flujo'
+      fullPath: '/flujo'
+      preLoaderRoute: typeof FlujoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contacto': {
+      id: '/contacto'
+      path: '/contacto'
+      fullPath: '/contacto'
+      preLoaderRoute: typeof ContactoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +168,50 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/legal/terminos': {
+      id: '/legal/terminos'
+      path: '/terminos'
+      fullPath: '/legal/terminos'
+      preLoaderRoute: typeof LegalTerminosRouteImport
+      parentRoute: typeof LegalRoute
+    }
+    '/legal/pagare': {
+      id: '/legal/pagare'
+      path: '/pagare'
+      fullPath: '/legal/pagare'
+      preLoaderRoute: typeof LegalPagareRouteImport
+      parentRoute: typeof LegalRoute
+    }
+    '/legal/mandato': {
+      id: '/legal/mandato'
+      path: '/mandato'
+      fullPath: '/legal/mandato'
+      preLoaderRoute: typeof LegalMandatoRouteImport
+      parentRoute: typeof LegalRoute
+    }
   }
 }
 
+interface LegalRouteChildren {
+  LegalMandatoRoute: typeof LegalMandatoRoute
+  LegalPagareRoute: typeof LegalPagareRoute
+  LegalTerminosRoute: typeof LegalTerminosRoute
+}
+
+const LegalRouteChildren: LegalRouteChildren = {
+  LegalMandatoRoute: LegalMandatoRoute,
+  LegalPagareRoute: LegalPagareRoute,
+  LegalTerminosRoute: LegalTerminosRoute,
+}
+
+const LegalRouteWithChildren = LegalRoute._addFileChildren(LegalRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactoRoute: ContactoRoute,
+  FlujoRoute: FlujoRoute,
+  LegalRoute: LegalRouteWithChildren,
+  ModeloRoute: ModeloRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
